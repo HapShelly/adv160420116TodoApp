@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">TodoApp</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="newtodoOld">New To Do</string>
+    <string name="title">Enter Todo Title</string>
+    <string name="newtodo2">New ToDo</string>
+    <string name="notes">Enter Notes</string>
+    <string name="add">ADD TODO</string>
+    <string name="error">Your ToDo lists is empty! Start create a new ToDo</string>
 </resources>
