@@ -3,6 +3,7 @@ package com.example.todoapp.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import buildDb
 import com.example.todoapp.model.Todo
 import com.example.todoapp.model.TodoDatabase
 import kotlinx.coroutines.CoroutineScope
@@ -12,7 +13,7 @@ import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
 class ListTodoViewModel(application: Application)
-    : AndroidViewModel(application), CoroutineScope {
+    :AndroidViewModel(application), CoroutineScope {
     val todoLD = MutableLiveData<List<Todo>>()
     val todoLoadErrorLD = MutableLiveData<Boolean>()
     val loadingLD = MutableLiveData<Boolean>()
@@ -25,25 +26,20 @@ class ListTodoViewModel(application: Application)
         loadingLD.value = true
         todoLoadErrorLD.value = false
         launch {
-            val db = TodoDatabase.buildDatabase(
-                getApplication()
-            )
+            val db = buildDb(getApplication())
 
-            val todos = db.todoDao().selectAllTodo()
-            todoLD.postValue(todos)
+            todoLD.postValue(db.todoDao().selectAllTodo())
             loadingLD.postValue(false)
         }
     }
 
     fun clearTask(todo: Todo) {
         launch {
-            val db = TodoDatabase.buildDatabase(
-                getApplication()
-            )
+            val db = buildDb(getApplication())
             db.todoDao().deleteTodo(todo)
 
-            val todos = db.todoDao().selectAllTodo()
-            todoLD.postValue(todos)
+            todoLD.postValue(db.todoDao().selectAllTodo())
         }
     }
+
 }

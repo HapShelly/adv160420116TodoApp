@@ -15,17 +15,15 @@ import com.example.todoapp.viewmodel.ListTodoViewModel
 
 class TodoListFragment : Fragment() {
     private lateinit var binding: FragmentTodoListBinding
-    private val todoListAdapter = TodoListAdapter(arrayListOf()) { todo ->
-        // Handle click event
-    }
+    private val todoListAdapter = TodoListAdapter(arrayListOf(), { item -> viewModel.clearTask(item) })
     private lateinit var viewModel: ListTodoViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentTodoListBinding.inflate(inflater, container, false)
-        return binding.root
+        binding = FragmentTodoListBinding.inflate(inflater,container,false)
+        return  binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -33,7 +31,6 @@ class TodoListFragment : Fragment() {
 
         viewModel = ViewModelProvider(this).get(ListTodoViewModel::class.java)
         viewModel.refresh()
-
         binding.recViewTodo.layoutManager = LinearLayoutManager(context)
         binding.recViewTodo.adapter = todoListAdapter
 
@@ -45,35 +42,30 @@ class TodoListFragment : Fragment() {
         observeViewModel()
     }
 
-    private fun observeViewModel() {
+    fun observeViewModel() {
         viewModel.todoLD.observe(viewLifecycleOwner, Observer {
             todoListAdapter.updateTodoList(it)
-            if (it.isEmpty()) {
-                binding.recViewTodo.visibility = View.GONE
-                binding.txtError.visibility = View.VISIBLE
-                binding.txtError.text = "Your todo list is empty."
+            if(it.isEmpty()) {
+                binding.recViewTodo?.visibility = View.GONE
+                binding.txtError.setText("Your todo still empty.")
             } else {
-                binding.recViewTodo.visibility = View.VISIBLE
-                binding.txtError.visibility = View.GONE
+                binding.recViewTodo?.visibility = View.VISIBLE
             }
         })
 
-        viewModel.loadingLD.observe(viewLifecycleOwner, Observer { isLoading ->
-            if (isLoading) {
-                binding.progressLoad.visibility = View.VISIBLE
-                binding.recViewTodo.visibility = View.GONE
-                binding.txtError.visibility = View.GONE
+        viewModel.loadingLD.observe(viewLifecycleOwner, Observer {
+            if(it == false) {
+                binding.progressLoad?.visibility = View.GONE
             } else {
-                binding.progressLoad.visibility = View.GONE
+                binding.progressLoad?.visibility = View.VISIBLE
             }
         })
 
-        viewModel.todoLoadErrorLD.observe(viewLifecycleOwner, Observer { isError ->
-            if (isError) {
-                binding.txtError.visibility = View.VISIBLE
-                binding.txtError.text = "An error occurred while loading data."
+        viewModel.todoLoadErrorLD.observe(viewLifecycleOwner, Observer {
+            if(it == false) {
+                binding.txtError?.visibility = View.GONE
             } else {
-                binding.txtError.visibility = View.GONE
+                binding.txtError?.visibility = View.VISIBLE
             }
         })
     }
