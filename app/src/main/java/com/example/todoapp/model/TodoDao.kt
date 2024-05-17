@@ -24,4 +24,7 @@ interface TodoDao {
 
     @Query("UPDATE todo SET title=:title, notes=:notes, priority=:priority WHERE uuid = :id")
     suspend fun update(title:String, notes:String, priority:Int, id:Int)
+
+    @Query("UPDATE todo SET is_done = 1 WHERE uuid = :id")
+    suspend fun markTodoAsDone(id: Int)
 }

@@ -42,4 +42,12 @@ class ListTodoViewModel(application: Application)
         }
     }
 
+    fun markTaskAsDone(todo: Todo) {
+        launch {
+            val db = buildDb(getApplication())
+            db.todoDao().markTodoAsDone(todo.uuid)
+            todoLD.postValue(db.todoDao().selectAllTodo())
+        }
+    }
+
 }

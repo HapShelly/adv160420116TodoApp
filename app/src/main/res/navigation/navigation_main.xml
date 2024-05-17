@@ -8,8 +8,8 @@
     <fragment
         android:id="@+id/todoListFragment"
         android:name="com.example.todoapp.view.TodoListFragment"
-        android:label="fragment_todo_list"
-        tools:layout="@layout/fragment_todo_list" >
+        android:label="ToDo App"
+        tools:layout="@layout/fragment_todo_list">
         <action
             android:id="@+id/actionCreateTodo"
             app:destination="@id/createTodoFragment"
@@ -24,12 +24,12 @@
     <fragment
         android:id="@+id/createTodoFragment"
         android:name="com.example.todoapp.view.CreateTodoFragment"
-        android:label="fragment_create_todo"
+        android:label="Create Todo"
         tools:layout="@layout/fragment_create_todo" />
     <fragment
         android:id="@+id/editTodoFragment"
         android:name="com.example.todoapp.view.EditTodoFragment"
-        android:label="EditTodoFragment" >
+        android:label="Edit ToDo">
         <argument
             android:name="uuid"
             app:argType="integer" />

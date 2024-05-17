@@ -15,15 +15,15 @@ import com.example.todoapp.viewmodel.ListTodoViewModel
 
 class TodoListFragment : Fragment() {
     private lateinit var binding: FragmentTodoListBinding
-    private val todoListAdapter = TodoListAdapter(arrayListOf(), { item -> viewModel.clearTask(item) })
+    private val todoListAdapter = TodoListAdapter(arrayListOf()) { item -> viewModel.markTaskAsDone(item) }
     private lateinit var viewModel: ListTodoViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentTodoListBinding.inflate(inflater,container,false)
-        return  binding.root
+        binding = FragmentTodoListBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

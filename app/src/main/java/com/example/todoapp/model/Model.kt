@@ -11,7 +11,9 @@ data class Todo(
     @ColumnInfo(name="notes")
     var notes:String,
     @ColumnInfo(name="priority")
-    var priority:Int
+    var priority:Int,
+    @ColumnInfo(name="is_done")
+    var is_done: Int = 0 // New field added, using INTEGER instead of BOOLEAN because SQLite does not have a dedicated BOOLEAN type
 ) {
     @PrimaryKey(autoGenerate = true)
     var uuid:Int=0
